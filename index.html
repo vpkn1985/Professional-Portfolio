@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koteeswaran V.P - Professional Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #0056b3;
+            --bg-color: #f4f7fa;
+            --text-color: #333;
+            --white: #fff;
+            --shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            transition: background 0.3s ease;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+        }
+        nav li {
+            margin: 0 1rem;
+        }
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 700;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 100px 20px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>') repeat;
+            opacity: 0.2;
+            z-index: 1;
+        }
+        header > * {
+            position: relative;
+            z-index: 2;
+        }
+        header h1 {
+            font-size: 3.5em;
+            margin: 0 0 10px;
+            animation: fadeInUp 1s ease;
+        }
+        header p {
+            font-size: 1.3em;
+            margin: 0 0 20px;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+        .contact {
+            font-size: 1.1em;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+        .contact i {
+            margin-right: 10px;
+            color: var(--white);
+        }
+        section {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 40px;
+            background: var(--white);
+            box-shadow: var(--shadow);
+            border-radius: 15px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+        section.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        h2 i {
+            margin-right: 15px;
+            font-size: 1.5em;
+        }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+        h2:hover::after {
+            width: 100px;
+        }
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary-color);
+            transform: translateX(-50%);
+        }
+        .timeline-item {
+            position: relative;
+            margin: 20px 0;
+            width: 50%;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .timeline-item:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow);
+        }
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: -10px;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .timeline-item:nth-child(even)::before {
+            left: -10px;
+            right: auto;
+        }
+        .skills-grid, .certs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .skill-card, .cert-item {
+            background: linear-gradient(135deg, #e9f1ff, #d0e0ff);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .skill-card:hover, .cert-item:hover {
+            transform: translateY(-5px);
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        ul li::before {
+            content: '\f058';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+        }
+        ul li:hover {
+            color: var(--secondary-color);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow);
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 1.5em;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .close:hover {
+            color: var(--primary-color);
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            margin-top: 60px;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @media (max-width: 768px) {
+            .timeline::before { left: 20px; }
+            .timeline-item { width: calc(100% - 40px); left: 40px !important; }
+            .timeline-item::before { left: -10px; }
+            header h1 { font-size: 2.5em; }
+            section { padding: 20px; margin: 40px 10px; }
+            .modal-content { width: 95%; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#qualifications">Qualifications</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#achievements">Achievements</a></li>
+            <li><a href="#certifications">Certifications</a></li>
+        </ul>
+    </nav>
+
+    <header id="overview">
+        <h1>Koteeswaran V.P</h1>
+        <p>PRINCE2 Foundation certified PMP professional with 16 years in Program/Project/IT Operations Management and 19+ years in IT, spanning MFG, FMCG, BFSI, IT, LS, Supply Chain, and Pharma.</p>
+        <div class="contact">
+            <p><i class="fas fa-phone"></i>Cell: 7026207290 / 9840211046</p>
+            <p><i class="fas fa-envelope"></i>Email: koteeswaran.vp@yahoo.com</p>
+        </div>
+    </header>
+
+    <section id="qualifications">
+        <h2><i class="fas fa-graduation-cap"></i>Qualifications</h2>
+        <ul>
+            <li>MBA in IT & Project Management: CGPA 8.5, ISBM, Mumbai</li>
+            <li>B.Tech in Engineering Technology: CGPA 7.61, BITS Pilani</li>
+            <li>Engineering Diploma in Electrical & Electronics: 85%, Murugappa Polytechnic, Chennai</li>
+        </ul>
+    </section>
+
+    <section id="skills">
+        <h2><i class="fas fa-tools"></i>Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h3>Technical Skills</h3>
+                <ul>
+                    <li>PMP</li>
+                    <li>Prince2 Foundation</li>
+                    <li>Cloud Migrations</li>
+                    <li>Service Transition</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <h3>Management Skills</h3>
+                <ul>
+                    <li>Program Mgmt</li>
+                    <li>People Management</li>
+                    <li>IT Operations</li>
+                    <li>Service Delivery</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2><i class="fas fa-briefcase"></i>Experience</h2>
+        <div class="timeline">
+            <div class="timeline-item" onclick="openModal('exp1')">
+                <h3>Senior Program Manager (Portfolio Manager)</h3>
+                <p>From 11/2021, Cognizant – Portfolio/Program Management, Service Delivery, Governance.</p>
+            </div>
+            <div class="timeline-item" onclick="openModal('exp2')">
+                <h3>Senior Project Manager (Portfolio Lead)</h3>
+                <p>6/2019-11/2021, HCL – Portfolio/Program Management, Service Delivery, People Management.</p>
+            </div>
+            <div class="timeline-item" onclick="openModal('exp3')">
+                <h3>Deputy Manager Information Systems</h3>
+                <p>5/2015-7/2019, Valeo India – IT Program Management, Infrastructure Operations, CMMI/ITIL Implementation.</p>
+            </div>
+            <div class="timeline-item" onclick="openModal('exp4')">
+                <h3>Associate Manager Global IT</h3>
+                <p>9/2011-5/2015, HCL – Global IT Infrastructure Management, Operations.</p>
+            </div>
+            <div class="timeline-item" onclick="openModal('exp5')">
+                <h3>Site – In-Charge / IT PMO</h3>
+                <p>7/2008-5/2011, Wipro Infotech – IT Infrastructure Management.</p>
+            </div>
+            <div class="timeline-item" onclick="openModal('exp6')">
+                <h3>Senior Network Engineer</h3>
+                <p>5/2005-6/2008, HCL – WAN/LAN Management.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2><i class="fas fa-project-diagram"></i>Key Projects</h2>
+        <div class="timeline">
+            <div class="timeline-item" onclick="openModal('proj1')">
+                <h3>Cloud Migrations – HCL/CTS</h3>
+                <p>7/2019 onwards – Migrated 12,000 servers to AWS/Azure, managed 2,000 apps.</p>
+            </div>
+            <div class="timeline-item" onclick="openModal('proj2')">
+                <h3>Information Systems Transition – Valeo India</h3>
+                <p>6/2015-4/2019 – Migrated 25,000 servers to Hyper-V, redeveloped 450 apps.</p>
+            </div>
+            <div class="timeline-item" onclick="openModal('proj3')">
+                <h3>Location Consolidation – HCL</h3>
+                <p>6/2012-3/2015 – Consolidated 20,000+ users in Chennai.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="achievements">
+        <h2><i class="fas fa-trophy"></i>Achievements</h2>
+        <ul>
+            <li onclick="openModal('ach1')">Key Contributor/Top Performer (4/2017): Valeo India – Set up NOC/SOC with 24/7 support.</li>
+            <li onclick="openModal('ach2')">O-Infinity/HCL Jewel/LiveWire (4/2021): HCL – 3-year O rating, excelled in CSAT.</li>
+            <li onclick="openModal('ach3')">Thanks a Zillion/Star Performer (2/2012): Wipro Infotech – Saved 5 Billion.</li>
+        </ul>
+    </section>
+
+    <section id="certifications">
+        <h2><i class="fas fa-certificate"></i>Certifications</h2>
+        <div class="certs-grid">
+            <div class="cert-item" onclick="openModal('cert1')">Oracle Cloud Infrastructure Certified Architect – 2021</div>
+            <div class="cert-item" onclick="openModal('cert2')">Prince2 Foundation – 2018</div>
+            <div class="cert-item" onclick="openModal('cert3')">Bullet Proof Manager – 2017</div>
+            <div class="cert-item" onclick="openModal('cert4')">PMP – 2015</div>
+            <div class="cert-item" onclick="openModal('cert5')">Lead Auditor – 2015</div>
+            <div class="cert-item" onclick="openModal('cert6')">ITIL V3 Foundation – 2009</div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Koteeswaran V.P | Professional Portfolio</p>
+    </footer>
+
+    <!-- Modals -->
+    <div id="exp1" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('exp1')">&times;</span>
+            <h3>Senior Program Manager (Portfolio Manager)</h3>
+            <p><strong>Company:</strong> Cognizant Technology Solutions Limited</p>
+            <p><strong>Period:</strong> From 11/2021</p>
+            <p><strong>Description:</strong> 1. Portfolio / Program Management 2. Service Delivery Management 3. Operational Excellence 4. Program Forecast/Governance</p>
+        </div>
+    </div>
+    <div id="exp2" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('exp2')">&times;</span>
+            <h3>Senior Project Manager (Portfolio Lead)</h3>
+            <p><strong>Company:</strong> HCL Technologies Limited</p>
+            <p><strong>Period:</strong> 6/2019-11/2021</p>
+            <p><strong>Description:</strong> 1. Portfolio / Program Management 2. Service Delivery Management 3. People Management 4. CFS</p>
+        </div>
+    </div>
+    <div id="exp3" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('exp3')">&times;</span>
+            <h3>Deputy Manager Information Systems</h3>
+            <p><strong>Company:</strong> Valeo India Private Limited</p>
+            <p><strong>Period:</strong> 5/2015-7/2019</p>
+            <p><strong>Description:</strong> 1. IT Program Management 2. IT Infrastructure Operations Management 3. People Management 4. Service Delivery Management 5. CMMI SVC L3 implementation 6. ITIL V3 implementation 9. 24/7 IT support Setup</p>
+        </div>
+    </div>
+    <div id="exp4" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('exp4')">&times;</span>
+            <h3>Associate Manager Global IT</h3>
+            <p><strong>Company:</strong> HCL Technologies Limited</p>
+            <p><strong>Period:</strong> 9/2011-5/2015</p>
+            <p><strong>Description:</strong> 1. Global IT Infrastructure Project Management 2. IT Operations Management 3. People Management 4. Service Delivery Management</p>
+        </div>
+    </div>
+    <div id="exp5" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('exp5')">&times;</span>
+            <h3>Site – In-Charge / IT PMO</h3>
+            <p><strong>Company:</strong> Wipro Infotech, Hyderabad</p>
+            <p><strong>Period:</strong> 7/2008-5/2011</p>
+            <p><strong>Description:</strong> 1. Global IT Infrastructure Project Management 2. IT Operations Management 3. People Management 4. Service Delivery Management</p>
+        </div>
+    </div>
+    <div id="exp6" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('exp6')">&times;</span>
+            <h3>Senior Network Engineer</h3>
+            <p><strong>Company:</strong> HCL Technologies Limited</p>
+            <p><strong>Period:</strong> 5/2005-6/2008</p>
+            <p><strong>Description:</strong> 1. WAN Management 2. LAN Management 3. Team Lead</p>
+        </div>
+    </div>
+    <div id="proj1" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('proj1')">&times;</span>
+            <h3>Cloud Migrations – HCL/CTS</h3>
+            <p><strong>Period:</strong> 7/2019 onwards</p>
+            <p><strong>Details:</strong> Infra Programs → On-prem to Cloud Migration of 12,000 servers in AWS, 18,000 servers in Azure, 1,500 servers from AWS to Azure, Operational Excellence with CFS team, Service Delivery with 200 technical resources, Application & Data/Workload migration from On-Prem to Cloud. App Dev Programs → Application development and Management of 2,000 Business and Legacy Apps, Transition from Outsourced vendors to Internal DevOps Teams and COE Teams, Content management System migration, Chat Bots Setup, Ticketing Tool Migration from Remedy to Jira and ServiceNow, Migration of Webex to Zoom and MS Teams.</p>
+        </div>
+    </div>
+    <div id="proj2" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('proj2')">&times;</span>
+            <h3>Information Systems Transition – Valeo India</h3>
+            <p><strong>Period:</strong> 6/2015-4/2019</p>
+            <p><strong>Details:</strong> Infra Revamp → On-prem to Cloud Migration of 25,000 servers to Hyper-V, Win 2016 upgrade of 50,000 Servers, VMware to Hyper-V migration of 25,000 servers, ToIP to VoIP migration of 75,000 Phones, 250 VCon setups, Migration of 1,500 WAN links, 2,500 IPSec VPNs, NAC implementation with Cisco ISE for 60,000 devices, Monitoring of 250,000 IT assets, IT Operations of 220 Geo Sites, 24/7 support with 240 resources. App Revamp → Setting up Competence center, DevOps teams, Redevelopment of 450 Applications in GAE, Transitioning App dev/support from vendors to internal ADM/DevOps Teams.</p>
+        </div>
+    </div>
+    <div id="proj3" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('proj3')">&times;</span>
+            <h3>Location Consolidation – HCL</h3>
+            <p><strong>Period:</strong> 6/2012-3/2015</p>
+            <p><strong>Details:</strong> ODC setup across the globe with MPLS links and Voice setup, Nearshore center Setups, ODC migrations and Customer DC migrations, Chennai Location Consolidation of 200+ projects from 20 Physical locations to single location by moving 20,000+ users, Client connectivity (iVPNs, MPLS, PRIs, E1s T1s, VoIP Phones, Laptops, Servers, etc – Complete Infrastructure).</p>
+        </div>
+    </div>
+    <div id="ach1" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('ach1')">&times;</span>
+            <h3>Key Contributor/Top Performer</h3>
+            <p><strong>Date:</strong> 4/2017</p>
+            <p><strong>Company:</strong> Valeo India Private Limited</p>
+            <p><strong>Details:</strong> For my contribution in setting up the NOC and SOC teams with 24x7 support model for the first time in the company.</p>
+        </div>
+    </div>
+    <div id="ach2" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('ach2')">&times;</span>
+            <h3>O-Infinity / HCL Jewel / LiveWire</h3>
+            <p><strong>Date:</strong> 4/2021</p>
+            <p><strong>Company:</strong> HCL Technologies</p>
+            <p><strong>Details:</strong> For getting O rating for 3 years consecutively, For exemplary contributions in Project Delivery & management, for excelling in meeting CSAT.</p>
+        </div>
+    </div>
+    <div id="ach3" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('ach3')">&times;</span>
+            <h3>Thanks a Zillion / Star Performer</h3>
+            <p><strong>Date:</strong> 2/2012</p>
+            <p><strong>Company:</strong> Wipro Infotech</p>
+            <p><strong>Details:</strong> For cost saving efforts of 5 Billion for 2 Projects.</p>
+        </div>
+    </div>
+    <div id="cert1" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('cert1')">&times;</span>
+            <h3>Oracle Cloud Infrastructure Certified Architect</h3>
+            <p><strong>Year:</strong> 2021</p>
+        </div>
+    </div>
+    <div id="cert2" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('cert2')">&times;</span>
+            <h3>Prince2 Foundation</h3>
+            <p><strong>Year:</strong> 2018</p>
+        </div>
+    </div>
+    <div id="cert3" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('cert3')">&times;</span>
+            <h3>Bullet Proof Manager</h3>
+            <p><strong>Year:</strong> 2017</p>
+        </div>
+    </div>
+    <div id="cert4" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('cert4')">&times;</span>
+            <h3>PMP</h3>
+            <p><strong>Year:</strong> 2015</p>
+        </div>
+    </div>
+    <div id="cert5" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('cert5')">&times;</span>
+            <h3>Lead Auditor</h3>
+            <p><strong>Year:</strong> 2015</p>
+        </div>
+    </div>
+    <div id="cert6" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('cert6')">&times;</span>
+            <h3>ITIL V3 Foundation</h3>
+            <p><strong>Year:</strong> 2009</p>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scroll for nav links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Scroll animation
+        function isInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return rect.top < window.innerHeight && rect.bottom > 0;
+        }
+        function handleScroll() {
+            document.querySelectorAll('section').forEach(section => {
+                if (isInViewport(section)) {
+                    section.classList.add('in-view');
+                }
+            });
+        }
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Initial call
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
